@@ -43,7 +43,7 @@ bool ModulePhysics::Start()
 
 	// TODO 4: Create a a big static circle as "ground"
 	b2BodyDef groundBodyDef;
-	groundBodyDef.position.Set(3.0f, 3.0f);
+	groundBodyDef.position.Set(5.0f, 5.0f);
 
 	b2Body* groundBody = world->CreateBody(&groundBodyDef);
 
@@ -67,12 +67,40 @@ update_status ModulePhysics::PreUpdate()
 	return UPDATE_CONTINUE;
 }
 
+
+
+
+
 // 
 update_status ModulePhysics::PostUpdate()
 {
 	// TODO 5: On space bar press, create a circle on mouse position
 	// - You need to transform the position / radius
+	if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
+	{
+		
 
+		b2Vec2 gravity(0.0f, 10.0f);
+		world = new b2World(gravity);
+
+		// TODO 4: Create a a big static circle as "ground"
+		b2BodyDef groundBodyDef;
+		groundBodyDef.position.Set(PIXEL_TO_METER(App->input->GetMouseX()), PIXEL_TO_METER(App->input->GetMouseY()));
+
+		b2Body* groundBody = world->CreateBody(&groundBodyDef);
+
+		b2CircleShape circle;
+		circle.m_p.Set(0.0f, 0.0f);
+		circle.m_radius = 1.0f;
+
+		groundBody->CreateFixture(&circle, 0.0f);
+
+		PhysBody* pbody = new PhysBody();
+		pbody->body = groundBody;
+		pbody->width = pbody->height = circle.m_radius;
+
+	}
+	
 	if(App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
 		debug = !debug;
 

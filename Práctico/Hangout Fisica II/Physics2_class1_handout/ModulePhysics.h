@@ -4,6 +4,17 @@
 
 struct b2World;
 
+class PhysBody
+{
+public:
+	void GetPosition(int& x, int &y) const;
+	float GetRotation() const;
+
+public:
+	int width, height;
+	b2Body* body;
+};
+
 class ModulePhysics : public Module
 {
 public:
